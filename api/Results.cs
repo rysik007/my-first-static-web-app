@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Azure.Storage.Blobs;
+using System.Text;
 
 namespace Amp.Test
 {
@@ -28,17 +29,14 @@ namespace Amp.Test
             //new Uri("https://<storage-account-name>.blob.core.windows.net"),
             //new DefaultAzureCredential());
             BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("mydefaultcontainer");
-            using (var stream = new MemoryStream())
-            {
+            string test = "Testing 1-2-3";
 
-                stream.Position = 0;
-                using (var sw = new StreamWriter(stream))
-                {
-                    sw.Write("K");
-                }
+            // convert string to stream
+            byte[] byteArray = Encoding.ASCII.GetBytes(test);
+            MemoryStream stream = new MemoryStream(byteArray);
 
                 containerClient.UploadBlob("Test", stream);
-            }
+            
             return new OkObjectResult("ok");
         }
     }
