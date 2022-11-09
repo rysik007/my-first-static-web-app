@@ -21,7 +21,7 @@ namespace Amp.Test
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
 
-            string connectionString = "DefaultEndpointsProtocol=https;AccountName=ohconnectdevstorage;AccountKey=U9ZP7uaNh5nyHaGUa4GsZRBG8rjzbaWvTdtbf9v1Wdu1839JAqg3O6nJIW0mGZT6LOIqrMtwytVO+ASt1DTFuA==;EndpointSuffix=core.windows.net";
+            string connectionString = Environment.GetEnvironmentVariable("OhStorageConStr", EnvironmentVariableTarget.Process);
 
             // Create a BlobServiceClient object 
             var blobServiceClient = new BlobServiceClient(connectionString);
