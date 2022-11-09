@@ -29,14 +29,15 @@ namespace Amp.Test
             //new Uri("https://<storage-account-name>.blob.core.windows.net"),
             //new DefaultAzureCredential());
             BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("mydefaultcontainer");
+            BlobClient blobClient = containerClient.GetBlobClient("Test");
             string test = "Testing 1-2-3";
 
             // convert string to stream
             byte[] byteArray = Encoding.ASCII.GetBytes(test);
             MemoryStream stream = new MemoryStream(byteArray);
 
-                containerClient.UploadBlob("Test", stream);
-            
+            blobClient.DeleteIfExists(Azure.Storage.Blobs.Models.DeleteSnapshotsOption.None);
+            blobClient.Upload(stream);
             return new OkObjectResult("ok");
         }
     }
